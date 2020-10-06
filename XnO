@@ -1,0 +1,161 @@
+def soll(a):
+    if sum(a[0])==3:
+        return 1
+    elif sum(a[1])==3:
+        return 1
+    elif sum(a[2])==3:
+        return 1
+    elif a[0][0]==1 and a[1][0]==1 and a[2][0]==1:
+        return 1
+    elif a[0][1]==1 and a[1][1]==1 and a[2][1]==1:
+        return 1
+    elif a[0][2]==1 and a[1][2]==1 and a[2][2]==1:
+        return 1
+    elif a[0][0]==1 and a[1][1]==1 and a[2][2]==1:
+        return 1
+    elif a[0][2]==1 and a[1][1]==1 and a[2][0]==1:
+        return 1
+    if sum(a[0])==0:
+        return -1
+    elif sum(a[1])==0:
+        return -1
+    elif sum(a[2])==0:
+        return -1
+    elif a[0][0]==0 and a[1][0]==0 and a[2][0]==0:
+        return -1
+    elif a[0][1]==0 and a[1][1]==0 and a[2][1]==0:
+        return -1
+    elif a[0][2]==0 and a[1][2]==0 and a[2][2]==0:
+        return -1
+    elif a[0][0]==0 and a[1][1]==0 and a[2][2]==0:
+        return -1
+    elif a[0][2]==0 and a[1][1]==0 and a[2][0]==0:
+        return -1
+    else:
+        return 0
+def maxx(a,k,l):
+    if a[1][1]==5:
+        l=[]
+        l.append(1)
+        l.append(1)
+        return l
+    m=-99
+    p=0
+    o=[]
+    for i in range(3):
+        for j in range(3):
+            if a[i][j]==5:
+                q=a.copy()
+                q[i][j]=1
+                x=minn(q,k+1,l)
+                if k!=3 or l==3:
+                    if x>m:
+                        m=x
+                        o=[]
+                        o.append(i)
+                        o.append(j)
+                else:
+                    p=p+x
+                a[i][j]=5
+                q[i][j]=5
+    if k==l:
+        return o
+    elif k==3:
+        return p
+    else:
+        return m
+def minn(a,k,l):
+    p=99
+    if l+1==k:
+        for i in range(3):
+            for j in range(3):
+                if a[i][j]==5:
+                    q=a.copy()
+                    q[i][j]=0
+                    d=soll(q)
+                    if d==-1:
+                        q[i][j]=5
+                        a[i][j]=5
+                        return -90
+                    q[i][j]=5
+                    a[i][j]=5      
+    for i in range(3):
+        for j in range(3):
+            if a[i][j]==5:
+                q=a.copy()
+                q[i][j]=0
+                if k==4:
+                    h=soll(q)
+                    q[i][j]=5
+                    a[i][j]=5
+                    return h
+                else:
+                    x=maxx(q,k,l)
+                    if x<p:
+                        p=x
+                q[i][j]=5
+                a[i][j]=5
+    return p
+t=list()
+for i in range(3):
+    l=[5,5,5]
+    t.append(l)
+for i in range(4):
+    for j in range(3):
+        print(t[j])
+    m=int(input("enter the row: "))
+    n=int(input("enter the column: "))
+    t[m][n]=0
+    d=soll(t)
+    if d==1:
+        for j in range(3):
+            print(t[j])
+        print("lost")
+        exit(0)
+    elif d==-1:
+        for j in range(3):
+            print(t[j])
+        print("won")
+        exit(0)
+    l=[]
+    l=maxx(t.copy(),i,i)
+    t[l[0]][l[1]]=1
+    d=soll(t)
+    if d==1:
+        for j in range(3):
+            print(t[j])
+        print("lost")
+        exit(0)
+    elif d==-1:
+        for j in range(3):
+            print(t[j])
+        print("won")
+        exit(0)
+for j in range(3):
+        print(t[j])
+m=int(input("enter the row: "))
+n=int(input("enter the column: "))
+t[m][n]=0
+if soll(t)==1:
+    for j in range(3):
+        print(t[j])
+    print("lost")
+    exit(0)
+elif soll(t)==-1:
+    for j in range(3):
+        print(t[j])
+    print("won")
+    exit(0)
+else:
+    for j in range(3):
+        print(t[j])
+    print("draw")
+    exit(0)
+
+                    
+            
+                    
+                    
+                    
+                
+                
